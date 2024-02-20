@@ -67,6 +67,43 @@ public class Seats {
         seats[pos.row][pos.col] = true;
     }
 
+    public String toDisplayString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.insert(0, "|     |");
+
+        for (int colIdx = 1; colIdx <= Position.COL_HIGHER_BOUND + 1; colIdx++) {
+            String append;
+
+            if (colIdx > 9) {
+                append = String.format("  %s |", colIdx);
+            } else {
+                append = String.format("  %s  |", colIdx);
+            }
+
+            builder.append(append);
+        }
+        builder.append("\n");
+
+        for (int rowIdx = 0; rowIdx < seats.length; rowIdx++) {
+            final boolean[] cols = seats[rowIdx];
+            final StringBuilder rowBuilder = new StringBuilder();
+
+            rowBuilder.append(String.format("|  %s  |", Position.getUnsafeRowLetter(rowIdx)));
+
+            for (boolean col : cols) {
+                rowBuilder.append(String.format("  %s  |", col ? 'X' : 'O'));
+            }
+
+            if (cols.length == 12) {
+                rowBuilder.append("     |     |");
+            }
+
+            rowBuilder.append("\n");
+            builder.append(rowBuilder);
+        }
+
+        return builder.toString();
+    }
 
     @Override
     public String toString() {
@@ -76,6 +113,6 @@ public class Seats {
         final String dSeats = Arrays.toString(seats[3]);
 
 
-        return String.format("seat.Seats {\n\ta: %s,\n\tb: %s,\n\tc: %s,\n\td: %s\n}", aSeats, bSeats, cSeats, dSeats);
+        return String.format("Seats {\n\ta: %s,\n\tb: %s,\n\tc: %s,\n\td: %s\n}", aSeats, bSeats, cSeats, dSeats);
     }
 }

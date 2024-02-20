@@ -1,36 +1,41 @@
 public class Main {
     public static void main(String[] args) throws UnsupportedOperationException {
-        System.out.println("Welcome to the Plane Management system");
-        System.out.println("""
-                *************************************************
-                *                 Menu Options                  *
-                *************************************************
-                    1. Buy a seat
-                    2. Cancel a seat
-                    3. Find first available seat
-                    4. Show seating plan
-                    5. Print tickets information and total sales
-                    6. Search ticket
-                    0. Quit
-                *************************************************
-                """);
+        showSeatingPlan(new Seats());
 
-        final int option = IOUtils.getUserInteger(0, 6, "Please select an option: ", "You need to select a valid number!");
-        final Seats seats = new Seats();
-
-        switch (option) {
-            case 1:
-                buySeat(seats);
-                break;
-            case 2:
-                cancelSeat(seats);
-                break;
-            case 3:
-                findFirstAvailable(seats);
-                break;
-            default:
-                throw new UnsupportedOperationException();
-        }
+//        System.out.println("Welcome to the Plane Management system");
+//        System.out.println("""
+//                *************************************************
+//                *                 Menu Options                  *
+//                *************************************************
+//                    1. Buy a seat
+//                    2. Cancel a seat
+//                    3. Find first available seat
+//                    4. Show seating plan
+//                    5. Print tickets information and total sales
+//                    6. Search ticket
+//                    0. Quit
+//                *************************************************
+//                """);
+//
+//        final int option = IOUtils.getUserInteger(0, 6, "Please select an option: ", "You need to select a valid number!");
+//        final Seats seats = new Seats();
+//
+//        switch (option) {
+//            case 1:
+//                buySeat(seats);
+//                break;
+//            case 2:
+//                cancelSeat(seats);
+//                break;
+//            case 3:
+//                findFirstAvailable(seats);
+//                break;
+//            case 4:
+//                showSeatingPlan(seats);
+//                break;
+//            default:
+//                throw new UnsupportedOperationException();
+//        }
     }
 
     static void buySeat(Seats seats) {
@@ -70,6 +75,10 @@ public class Main {
         } catch (IllegalStateException e) {
             System.out.println("It seems that all the seats are taken :(");
         }
+    }
+
+    static void showSeatingPlan(Seats seats) {
+        System.out.println(seats.toDisplayString());
     }
 }
 

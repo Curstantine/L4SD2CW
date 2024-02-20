@@ -10,6 +10,7 @@ public class Position {
     public static final int COL_HIGHER_BOUND_ALT = 12;
 
     public int col;
+
     public int row;
 
     /**
@@ -40,6 +41,22 @@ public class Position {
     static void validatePosition(int col, int row) throws IndexOutOfBoundsException {
         validateRow(row);
         if (col < COL_LOWER_BOUND || col > getColumnUpperBound(row)) throw new IndexOutOfBoundsException();
+    }
+
+    /**
+     * Returns the row letter of related row index.
+     * 
+     * @throws IndexOutOfBoundsException When row is out-of-bounds from seat layout.
+     * @see #getUnsafeRowLetter(int)
+     */
+    public static char getUnsafeRowLetter(int row) throws IndexOutOfBoundsException {
+        return switch (row) {
+            case 0 -> 'A';
+            case 1 -> 'B';
+            case 2 -> 'C';
+            case 3 -> 'D';
+            default -> throw new IndexOutOfBoundsException();
+        };
     }
 
     /**
@@ -80,14 +97,11 @@ public class Position {
         return new Position(localCol, localRow);
     }
 
+    /**
+     * Safer variant of {@link #getUnsafeRowLetter(int)}
+     */
     public char getRowLetter() {
-        return switch (this.row) {
-            case 0 -> 'A';
-            case 1 -> 'B';
-            case 2 -> 'C';
-            case 3 -> 'D';
-            default -> throw new RuntimeException(String.format("Unreachable index-out-of-bound on %s", this));
-        };
+        return getUnsafeRowLetter(this.row);
     }
 
     @Override
