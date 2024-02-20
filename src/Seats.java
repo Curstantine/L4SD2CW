@@ -69,37 +69,31 @@ public class Seats {
 
     public String toDisplayString() {
         final StringBuilder builder = new StringBuilder();
-        builder.insert(0, "|     |");
+        builder.insert(0, "    ");
 
         for (int colIdx = 1; colIdx <= Position.COL_HIGHER_BOUND + 1; colIdx++) {
-            String append;
-
-            if (colIdx > 9) {
-                append = String.format("  %s |", colIdx);
-            } else {
-                append = String.format("  %s  |", colIdx);
-            }
-
-            builder.append(append);
+            builder.append(String.format("  %s", colIdx));
+            builder.append(" ".repeat(colIdx > 9 ? 2 : 3));
         }
+
         builder.append("\n");
 
         for (int rowIdx = 0; rowIdx < seats.length; rowIdx++) {
             final boolean[] cols = seats[rowIdx];
             final StringBuilder rowBuilder = new StringBuilder();
 
-            rowBuilder.append(String.format("|  %s  |", Position.getUnsafeRowLetter(rowIdx)));
+            final char rowLetter = Position.getUnsafeRowLetter(rowIdx);
+            rowBuilder.append(String.format("%s  |", rowLetter));
 
             for (boolean col : cols) {
                 rowBuilder.append(String.format("  %s  |", col ? 'X' : 'O'));
             }
 
             if (cols.length == 12) {
-                rowBuilder.append("     |     |");
+                rowBuilder.append("     |".repeat(2));
             }
 
-            rowBuilder.append("\n");
-            builder.append(rowBuilder);
+            builder.append(rowBuilder.append("\n"));
         }
 
         return builder.toString();
