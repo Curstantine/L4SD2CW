@@ -85,8 +85,8 @@ public class Seats {
             final char rowLetter = Position.getUnsafeRowLetter(rowIdx);
             rowBuilder.append(String.format("%s  |", rowLetter));
 
-            for (boolean col : cols) {
-                rowBuilder.append(String.format("  %s  |", col ? 'X' : 'O'));
+            for (boolean isSlotTaken : cols) {
+                rowBuilder.append(String.format("  %s  |", isSlotTaken ? 'X' : 'O'));
             }
 
             if (cols.length == 12) {
