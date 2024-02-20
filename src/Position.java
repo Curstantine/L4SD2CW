@@ -70,4 +70,19 @@ public class Position {
 
         return new Position(localCol, localRow);
     }
+
+    public char getRowLetter() {
+        return switch (this.row) {
+            case 0 -> 'A';
+            case 1 -> 'B';
+            case 2 -> 'C';
+            case 3 -> 'D';
+            default -> throw new RuntimeException(String.format("Unreachable index-out-of-bound on %s", this));
+        };
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Position { row: %s, col: %s }", this.row, this.row);
+    }
 }

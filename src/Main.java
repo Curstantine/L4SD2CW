@@ -24,13 +24,17 @@ public class Main {
                 break;
             case 2:
                 cancelSeat(seats);
+                break;
+            case 3:
+                findFirstAvailable(seats);
+                break;
             default:
                 throw new UnsupportedOperationException();
         }
     }
 
     static void buySeat(Seats seats) {
-       Position position;
+        Position position;
 
         // We want the input process to continue till the inputs are valid, and the seats are empty.
         while (true) {
@@ -57,6 +61,11 @@ public class Main {
 
     static void findFirstAvailable(Seats seats) {
         final Position firstAvailable = seats.getFirstAvailable();
+
+        System.out.printf("Seat at %s%s is available! ", firstAvailable.getRowLetter(), firstAvailable.col);
+        if (!IOUtils.getYesNoPrompt("Do you want to buy it?")) return;
+
+        seats.buySeat(firstAvailable);
     }
 }
 

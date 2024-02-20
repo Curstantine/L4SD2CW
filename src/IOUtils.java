@@ -45,20 +45,27 @@ public class IOUtils {
         return value;
     }
 
-    public static boolean getYesNoPrompt(String message, String invalidMessage) {
+    public static boolean getYesNoPrompt(String message) {
         boolean value;
 
         while (true) {
-            System.out.print(message);
+            System.out.print(message + " (Y/N): ");
 
             try {
                 final Scanner input = new Scanner(System.in);
-                value = input.nextBoolean();
+                final String stringVal = input.next().toLowerCase();
 
-                break;
+                if (stringVal.equals("y") || stringVal.equals("yes")) {
+                    value = true;
+                    break;
+                } else if (stringVal.equals("n") || stringVal.equals("no")) {
+                    value = false;
+                    break;
+                } else {
+                    throw new InputMismatchException();
+                }
             } catch (InputMismatchException e) {
-                System.out.println(invalidMessage);
-                continue;
+                System.out.println("Invalid input! Allowed values are either Y(es) or N(o)");
             }
         }
 
