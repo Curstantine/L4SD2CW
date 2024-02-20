@@ -12,7 +12,13 @@ public class Position {
     public int col;
     public int row;
 
-    public Position(int col, int row) {
+    /**
+     * Creates a position reference from {@link #col} and {@link #row}.
+     * This class guarantees that the underlying coordinates are valid in the {@link Seats} class.
+     *
+     * @throws IndexOutOfBoundsException When either col or row are out-of-bound with the seating layout constraints.
+     */
+    public Position(int col, int row) throws IndexOutOfBoundsException {
         validatePosition(col, row);
 
         this.col = col;
@@ -50,6 +56,9 @@ public class Position {
         };
     }
 
+    /**
+     * Returns a {@link Position} from a formatted row/col user input.
+     */
     public static Position getColRowFromInput() {
         final String rowLettersHuman = String.join(", ", ROW_LETTERS);
         final String rowLetter = IOUtils.getUserString(

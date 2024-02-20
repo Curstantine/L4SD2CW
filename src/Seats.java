@@ -1,8 +1,12 @@
 import java.util.Arrays;
 
+/**
+ * All the methods under this class are protected by {@link Position},
+ * so none of the methods that digest a position doesn't throw {@link IndexOutOfBoundsException}.
+ * <br /> <br />
+ * This safety comes from how {@link Position} validates col and row at initialization time.
+ */
 public class Seats {
-
-
     private final boolean[][] seats = new boolean[4][];
 
     public Seats() {
@@ -13,7 +17,7 @@ public class Seats {
     }
 
 
-    public int getPrice(Position pos) throws IndexOutOfBoundsException {
+    public int getPrice(Position pos) {
         // validateColRow already takes care of anything out of bounds, so we can safely assume indexes.
         if (pos.col <= 5) return 200;
         if (pos.col <= 9) return 150;
@@ -21,7 +25,7 @@ public class Seats {
         return 180;
     }
 
-    public boolean isSeatAvailable(Position pos) throws IndexOutOfBoundsException {
+    public boolean isSeatAvailable(Position pos) {
         return !seats[pos.row][pos.col];
     }
 
@@ -44,22 +48,20 @@ public class Seats {
     }
 
     /**
-     * @throws IndexOutOfBoundsException If the col or row is out-of-bound.
-     * @throws IllegalStateException     If the seat of row and col is already taken.
+     * @throws IllegalStateException If the seat of row and col is already taken.
      * @see #isSeatAvailable(Position)
      */
-    public void buySeat(Position pos) throws IndexOutOfBoundsException, IllegalStateException {
+    public void buySeat(Position pos) throws IllegalStateException {
         if (seats[pos.row][pos.col]) throw new IllegalStateException("Seat is already bought");
 
         seats[pos.row][pos.col] = true;
     }
 
     /**
-     * @throws IndexOutOfBoundsException If the col or row is out-of-bound.
-     * @throws IllegalStateException     If the seat of row and col is free.
+     * @throws IllegalStateException If the seat of row and col is free.
      * @see #isSeatAvailable(Position)
      */
-    public void cancelSeat(Position pos) throws IndexOutOfBoundsException, IllegalStateException {
+    public void cancelSeat(Position pos) throws IllegalStateException {
         if (!seats[pos.row][pos.col]) throw new IllegalStateException("Seat is free");
 
         seats[pos.row][pos.col] = true;

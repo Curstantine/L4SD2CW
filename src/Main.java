@@ -60,12 +60,16 @@ public class Main {
     }
 
     static void findFirstAvailable(Seats seats) {
-        final Position firstAvailable = seats.getFirstAvailable();
+        try {
+            final Position firstAvailable = seats.getFirstAvailable();
 
-        System.out.printf("Seat at %s%s is available! ", firstAvailable.getRowLetter(), firstAvailable.col);
-        if (!IOUtils.getYesNoPrompt("Do you want to buy it?")) return;
+            System.out.printf("Seat at %s%s is available! ", firstAvailable.getRowLetter(), firstAvailable.col);
+            if (!IOUtils.getYesNoPrompt("Do you want to buy it?")) return;
 
-        seats.buySeat(firstAvailable);
+            seats.buySeat(firstAvailable);
+        } catch (IllegalStateException e) {
+            System.out.println("It seems that all the seats are taken :(");
+        }
     }
 }
 
