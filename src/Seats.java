@@ -8,21 +8,13 @@ import java.util.Arrays;
  */
 public class Seats {
     private final boolean[][] seats = new boolean[4][];
+    private Ticket[] tickets = {};
 
     public Seats() {
         seats[0] = new boolean[14];
         seats[1] = new boolean[12];
         seats[2] = new boolean[12];
         seats[3] = new boolean[14];
-    }
-
-
-    public int getPrice(Position pos) {
-        // validateColRow already takes care of anything out of bounds, so we can safely assume indexes.
-        if (pos.col <= 5) return 200;
-        if (pos.col <= 9) return 150;
-
-        return 180;
     }
 
     public boolean isSeatAvailable(Position pos) {
@@ -51,10 +43,15 @@ public class Seats {
      * @throws IllegalStateException If the seat of row and col is already taken.
      * @see #isSeatAvailable(Position)
      */
-    public void buySeat(Position pos) throws IllegalStateException {
-        if (seats[pos.row][pos.col]) throw new IllegalStateException("Seat is already bought");
+    public void buySeat(Position position, Person person) throws IllegalStateException {
+        if (seats[position.row][position.col]) throw new IllegalStateException("Seat is already bought");
 
-        seats[pos.row][pos.col] = true;
+        seats[position.row][position.col] = true;
+        final Ticket ticket = new Ticket(position, person);
+
+        // We are not allowed to use LinkedLists or ArrayLists :(
+        tickets = Arrays.copyOf(tickets, tickets.length + 1);
+        tickets[tickets.length - 1] = ticket;
     }
 
     /**

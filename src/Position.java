@@ -45,7 +45,7 @@ public class Position {
 
     /**
      * Returns the row letter of related row index.
-     * 
+     *
      * @throws IndexOutOfBoundsException When row is out-of-bounds from seat layout.
      * @see #getUnsafeRowLetter(int)
      */
@@ -73,10 +73,7 @@ public class Position {
         };
     }
 
-    /**
-     * Returns a {@link Position} from a formatted row/col user input.
-     */
-    public static Position getColRowFromInput() {
+    public static Position fromUserInput() {
         final String rowLettersHuman = String.join(", ", ROW_LETTERS);
         final String rowLetter = IOUtils.getUserString(
                 Set.of(ROW_LETTERS),
@@ -103,6 +100,23 @@ public class Position {
     public char getRowLetter() {
         return getUnsafeRowLetter(this.row);
     }
+
+    /**
+     * Returns the display string formatted as "[ROW_LETTER][COL]"
+     * <br />
+     * E.g. A12, C2
+     */
+    public String toDisplayString() {
+        return String.format("%s%s", getRowLetter(), col);
+    }
+
+    public int getPrice() {
+        if (col <= 5) return 200;
+        if (col <= 9) return 150;
+
+        return 180;
+    }
+
 
     @Override
     public String toString() {

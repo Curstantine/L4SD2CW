@@ -24,6 +24,11 @@ public class IOUtils {
         return value;
     }
 
+
+    /**
+     * Prompts the user for input.
+     * @param valid When the set is empty, no validation will be done.
+     */
     public static String getUserString(Set<String> valid, String message, String invalidMessage) {
         String value;
 
@@ -32,11 +37,10 @@ public class IOUtils {
             final Scanner input = new Scanner(System.in);
             final String str = input.next();
 
-            if (!valid.contains(str)) {
+            if (!valid.isEmpty() && !valid.contains(str)) {
                 System.out.println(invalidMessage);
                 continue;
             }
-
 
             value = str;
             break;
