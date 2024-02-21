@@ -17,6 +17,10 @@ public class Seats {
         seats[3] = new boolean[14];
     }
 
+    public Ticket[] getTickets() {
+        return tickets;
+    }
+
     public boolean isSeatAvailable(Position pos) {
         return !seats[pos.row][pos.col];
     }

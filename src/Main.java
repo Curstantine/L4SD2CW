@@ -31,6 +31,9 @@ public class Main {
             case 4:
                 showSeatingPlan(seats);
                 break;
+            case 5:
+                printTicketsInfo(seats);
+                break;
             default:
                 throw new UnsupportedOperationException();
         }
@@ -79,6 +82,31 @@ public class Main {
 
     static void showSeatingPlan(Seats seats) {
         System.out.println(seats.toDisplayString());
+    }
+
+    static void printTicketsInfo(Seats seats) {
+        System.out.println("\n**** Ticket sales information ****");
+
+        Ticket[] tickets = seats.getTickets();
+
+        if (tickets.length == 0) {
+            System.out.println("None of the tickets were sold :(");
+            return;
+        }
+
+        int total = 0;
+        final StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < tickets.length; i++) {
+            Ticket ticket = tickets[i];
+
+            total += ticket.getPrice();
+            builder.append(String.format("%s. %s\n", i + 1, ticket.toDisplayString()));
+        }
+
+
+        System.out.println(builder);
+        System.out.printf("With total sales resulting in %sLKR!\n", total);
     }
 }
 
