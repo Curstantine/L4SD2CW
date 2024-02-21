@@ -38,6 +38,9 @@ public class Main {
                 break;
             case 6:
                 searchTicket(seats);
+                break;
+            case 0:
+                return;
             default:
                 throw new UnsupportedOperationException();
         }
