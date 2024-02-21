@@ -127,4 +127,22 @@ public class Position {
     public String toString() {
         return String.format("Position { row: %s, col: %s }", row, col);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Position position = (Position) o;
+
+        if (col != position.col) return false;
+        return row == position.row;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = col;
+        result = 31 * result + row;
+        return result;
+    }
 }
