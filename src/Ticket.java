@@ -17,7 +17,7 @@ public class Ticket {
 
     public void save() throws IOException {
         final File folder = new File("./tickets");
-        final boolean folderCreated = folder.mkdir();
+        final boolean folderCreated = folder.exists() || folder.mkdir();
         if (!folderCreated) throw new IOException("Failed to create the tickets folder");
 
         final String path = String.format("%s%s.txt", folder.getPath() + File.separator, position.toDisplayString());

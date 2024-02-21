@@ -7,7 +7,7 @@ public class Position {
 
     public static final int COL_LOWER_BOUND = 0;
     public static final int COL_HIGHER_BOUND = 13;
-    public static final int COL_HIGHER_BOUND_ALT = 12;
+    public static final int COL_HIGHER_BOUND_ALT = 11;
 
     public int col;
 
