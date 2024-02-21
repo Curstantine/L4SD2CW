@@ -1,48 +1,63 @@
 import java.io.IOException;
 
 public class Main {
+    static String menuMessage = """
+            *************************************************
+            *                 Menu Options                  *
+            *************************************************
+                1. Buy a seat
+                2. Cancel a seat
+                3. Find first available seat
+                4. Show seating plan
+                5. Print tickets information and total sales
+                6. Search ticket
+                0. Quit
+            *************************************************
+            """;
+
+
     public static void main(String[] args) throws UnsupportedOperationException {
         System.out.println("Welcome to the Plane Management system");
-        System.out.println("""
-                *************************************************
-                *                 Menu Options                  *
-                *************************************************
-                    1. Buy a seat
-                    2. Cancel a seat
-                    3. Find first available seat
-                    4. Show seating plan
-                    5. Print tickets information and total sales
-                    6. Search ticket
-                    0. Quit
-                *************************************************
-                """);
+        System.out.println(menuMessage);
 
-        final int option = Prompter.promptRangeInteger(0, 6, "Please select an option: ", "You need to select a valid number!");
         final Seats seats = new Seats();
+        boolean firstTime = true;
 
-        switch (option) {
-            case 1:
-                buySeat(seats);
-                break;
-            case 2:
-                cancelSeat(seats);
-                break;
-            case 3:
-                findFirstAvailable(seats);
-                break;
-            case 4:
-                showSeatingPlan(seats);
-                break;
-            case 5:
-                printTicketsInfo(seats);
-                break;
-            case 6:
-                searchTicket(seats);
-                break;
-            case 0:
-                return;
-            default:
-                throw new UnsupportedOperationException();
+        while (true) {
+            if (!firstTime) {
+                System.out.println();
+                if (!Prompter.promptConditional("Do you want to continue to the session?")) break;
+                System.out.println(menuMessage);
+            }
+
+            final int option = Prompter.promptRangeInteger(0, 6, "Please select an option: ", "You need to select a valid number!");
+
+            switch (option) {
+                case 1:
+                    buySeat(seats);
+                    break;
+                case 2:
+                    cancelSeat(seats);
+                    break;
+                case 3:
+                    findFirstAvailable(seats);
+                    break;
+                case 4:
+                    showSeatingPlan(seats);
+                    break;
+                case 5:
+                    printTicketsInfo(seats);
+                    break;
+                case 6:
+                    searchTicket(seats);
+                    break;
+                case 0:
+                    return;
+                default:
+                    throw new UnsupportedOperationException();
+            }
+
+            firstTime = false;
         }
     }
 
