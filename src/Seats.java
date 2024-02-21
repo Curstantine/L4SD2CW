@@ -44,12 +44,14 @@ public class Seats {
      * @see #isSeatAvailable(Position)
      */
     public void buySeat(Position position, Person person) throws IllegalStateException {
-        if (seats[position.row][position.col]) throw new IllegalStateException("Seat is already bought");
+        if (seats[position.row][position.col]) throw new IllegalStateException("Seat is already occupied");
 
         seats[position.row][position.col] = true;
         final Ticket ticket = new Ticket(position, person);
 
         // We are not allowed to use LinkedLists or ArrayLists :(
+        // What we do is essentially creating a new array with the same content, but with a size of + 1,
+        // so we can replace the last item in the array with our new ticket.
         tickets = Arrays.copyOf(tickets, tickets.length + 1);
         tickets[tickets.length - 1] = ticket;
     }
@@ -59,9 +61,10 @@ public class Seats {
      * @see #isSeatAvailable(Position)
      */
     public void cancelSeat(Position pos) throws IllegalStateException {
-        if (!seats[pos.row][pos.col]) throw new IllegalStateException("Seat is free");
+        if (!seats[pos.row][pos.col]) throw new IllegalStateException("Seat is already free");
 
-        seats[pos.row][pos.col] = true;
+        seats[pos.row][pos.col] = false;
+        tickets = (Ticket[]) Arrays.stream(tickets).filter(x -> !x.position.equals(pos)).toArray();
     }
 
     public String toDisplayString() {

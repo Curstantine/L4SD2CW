@@ -15,7 +15,7 @@ public class Main {
                 *************************************************
                 """);
 
-        final int option = IOUtils.getUserInteger(0, 6, "Please select an option: ", "You need to select a valid number!");
+        final int option = Prompter.promptRangeInteger(0, 6, "Please select an option: ", "You need to select a valid number!");
         final Seats seats = new Seats();
 
         switch (option) {
@@ -39,7 +39,7 @@ public class Main {
     static void buySeat(Seats seats) {
         Position position;
 
-        // We want the input process to continue till the inputs are valid, and the seats are empty.
+        // We want the input process to continue until the user choose an available seat
         while (true) {
             position = Position.fromUserInput();
             if (seats.isSeatAvailable(position)) break;
@@ -53,7 +53,7 @@ public class Main {
     static void cancelSeat(Seats seats) {
         Position position;
 
-        // We want the input process to continue till the inputs are valid, and the seats are empty.
+        // We want the input process to continue until the user choose an occupied seat
         while (true) {
             position = Position.fromUserInput();
             if (!seats.isSeatAvailable(position)) break;
@@ -68,7 +68,7 @@ public class Main {
             final Position firstAvailable = seats.getFirstAvailable();
 
             System.out.printf("Seat at %s is available! ", firstAvailable.toDisplayString());
-            if (!IOUtils.getYesNoPrompt("Do you want to buy it?")) return;
+            if (!Prompter.promptConditional("Do you want to buy it?")) return;
 
             final Person person = Person.fromUserInput();
             seats.buySeat(firstAvailable, person);

@@ -2,8 +2,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
-public class IOUtils {
-    public static int getUserInteger(int start, int end, String message, String invalidMessage) {
+public class Prompter {
+
+    /**
+     * Prompts the user to insert a valid integer within the start and end range.
+     */
+    public static int promptRangeInteger(int start, int end, String message, String invalidMessage) {
         int value;
 
         while (true) {
@@ -24,32 +28,44 @@ public class IOUtils {
         return value;
     }
 
+    /**
+     * Prompts the user for a string.
+     *
+     * @see #promptValidString(Set, String, String)
+     */
+    public static String promptString(String message) {
+        System.out.print(message);
+        final Scanner input = new Scanner(System.in);
+        return input.next();
+    }
+
 
     /**
-     * Prompts the user for input.
-     * @param valid When the set is empty, no validation will be done.
+     * Prompts the user for a string input defined in the valid set.
      */
-    public static String getUserString(Set<String> valid, String message, String invalidMessage) {
+    public static String promptValidString(Set<String> valid, String message, String invalidMessage) {
         String value;
 
         while (true) {
             System.out.print(message);
+
             final Scanner input = new Scanner(System.in);
             final String str = input.next();
-
-            if (!valid.isEmpty() && !valid.contains(str)) {
-                System.out.println(invalidMessage);
-                continue;
+            if (valid.contains(str)) {
+                value = str;
+                break;
             }
 
-            value = str;
-            break;
+            System.out.println(invalidMessage);
         }
 
         return value;
     }
 
-    public static boolean getYesNoPrompt(String message) {
+    /**
+     * Prompts the user to input a "yes" "no" condition.
+     */
+    public static boolean promptConditional(String message) {
         boolean value;
 
         while (true) {
@@ -59,15 +75,13 @@ public class IOUtils {
                 final Scanner input = new Scanner(System.in);
                 final String stringVal = input.next().toLowerCase();
 
-                if (stringVal.equals("y") || stringVal.equals("yes")) {
-                    value = true;
-                    break;
-                } else if (stringVal.equals("n") || stringVal.equals("no")) {
-                    value = false;
-                    break;
-                } else {
-                    throw new InputMismatchException();
-                }
+                value = switch (stringVal) {
+                    case "y", "yes" -> true;
+                    case "n", "no" -> false;
+                    default -> throw new InputMismatchException();
+                };
+
+                break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input! Allowed values are either Y(es) or N(o)");
             }

@@ -1,5 +1,3 @@
-import java.util.Set;
-
 public class Person {
     public String name;
     public String surname;
@@ -12,11 +10,9 @@ public class Person {
     }
 
     public static Person fromUserInput() {
-        final Set<String> emptySet = Set.of();
-
-        final String name = IOUtils.getUserString(emptySet, "Insert your first name: ", "Please insert a valid string!");
-        final String surname = IOUtils.getUserString(emptySet, "Insert your surname: ", "Please insert a valid string!");
-        final String email = IOUtils.getUserString(emptySet, "Insert your email: ", "Please insert a valid email!");
+        final String name = Prompter.promptString("Insert your first name: ");
+        final String surname = Prompter.promptString("Insert your surname: ");
+        final String email = Prompter.promptString("Insert your email: ");
 
         return new Person(name, surname, email);
     }
