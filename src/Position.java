@@ -119,7 +119,7 @@ public class Position {
      * E.g. A12, C2
      */
     public String toDisplayString() {
-        return String.format("%s%s", getRowLetter(), col);
+        return String.format("%s%s", getRowLetter(), col + 1);
     }
 
 

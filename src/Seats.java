@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 /**
  * All the methods under this class are protected by {@link Position},
@@ -26,6 +27,15 @@ public class Seats {
     }
 
     /**
+     * Returns the ticket occupied by the given position.
+     *
+     * @throws NoSuchElementException when this position doesn't have an accompanying ticket.
+     */
+    public Ticket getTicket(Position pos) throws NoSuchElementException {
+        return Arrays.stream(tickets).filter(ticket -> ticket.position.equals(pos)).findFirst().orElseThrow();
+    }
+
+    /**
      * Returns the first available position in the seat layout.
      *
      * @throws IllegalStateException When there are no seats available.
@@ -47,7 +57,7 @@ public class Seats {
      * @throws IllegalStateException If the seat of row and col is already taken.
      * @see #isSeatAvailable(Position)
      */
-    public void buySeat(Position position, Person person) throws IllegalStateException {
+    public Ticket buySeat(Position position, Person person) throws IllegalStateException {
         if (seats[position.row][position.col]) throw new IllegalStateException("Seat is already occupied");
 
         seats[position.row][position.col] = true;
@@ -58,6 +68,8 @@ public class Seats {
         // so we can replace the last item in the array with our new ticket.
         tickets = Arrays.copyOf(tickets, tickets.length + 1);
         tickets[tickets.length - 1] = ticket;
+
+        return ticket;
     }
 
     /**

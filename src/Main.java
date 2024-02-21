@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) throws UnsupportedOperationException {
         System.out.println("Welcome to the Plane Management system");
@@ -34,6 +36,8 @@ public class Main {
             case 5:
                 printTicketsInfo(seats);
                 break;
+            case 6:
+                searchTicket(seats);
             default:
                 throw new UnsupportedOperationException();
         }
@@ -49,8 +53,13 @@ public class Main {
             System.out.println("This seat is already taken. Please try another one!");
         }
 
-        final Person person = Person.fromUserInput();
-        seats.buySeat(position, person);
+        try {
+            final Person person = Person.fromUserInput();
+            final Ticket ticket = seats.buySeat(position, person);
+            ticket.save();
+        } catch (IOException e) {
+            System.out.printf("Failed to write ticket file with error: %s", e);
+        }
     }
 
     static void cancelSeat(Seats seats) {
@@ -107,6 +116,20 @@ public class Main {
 
         System.out.println(builder);
         System.out.printf("With total sales resulting in %sLKR!\n", total);
+    }
+
+    static void searchTicket(Seats seats) {
+        final Position select = Position.fromUserInput();
+
+        if (seats.isSeatAvailable(select)) {
+            System.out.println("This seat is available!");
+            return;
+        }
+
+
+        final Ticket ticket = seats.getTicket(select);
+        System.out.printf("This seats is already taken by %s", ticket.toDisplayString());
+
     }
 }
 
