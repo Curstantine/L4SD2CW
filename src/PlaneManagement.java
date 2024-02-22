@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class Main {
+public class PlaneManagement {
     static String menuMessage = """
             *************************************************
             *                 Menu Options                  *
