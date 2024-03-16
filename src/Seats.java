@@ -80,7 +80,7 @@ public class Seats {
         if (!seats[pos.row][pos.col]) throw new IllegalStateException("Seat is already free");
 
         seats[pos.row][pos.col] = false;
-        tickets = (Ticket[]) Arrays.stream(tickets).filter(x -> !x.position.equals(pos)).toArray();
+        tickets = Arrays.stream(tickets).filter(x -> !x.position.equals(pos)).toArray(Ticket[]::new);
     }
 
     public String toDisplayString() {

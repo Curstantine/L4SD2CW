@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Set;
 
 public class Position {
@@ -80,21 +81,12 @@ public class Position {
 
     public static Position fromUserInput() {
         final String rowLettersHuman = String.join(", ", ROW_LETTERS);
-        final String rowLetter = Prompter.promptValidString(
-                Set.of(ROW_LETTERS),
-                String.format("Insert a row letter (%s): ", rowLettersHuman),
-                String.format("Please insert a valid row letter out of %s!", rowLettersHuman)
-        );
+        final String rowLetter = Prompter.promptValidString(Set.of(ROW_LETTERS), String.format("Insert a row letter (%s): ", rowLettersHuman), String.format("Please insert a valid row letter out of %s!", rowLettersHuman));
         final int localRow = Position.getRelatedRowIndex(rowLetter.charAt(0));
 
         final int colHumanLowerBound = COL_LOWER_BOUND + 1;
         final int colHumanUpperBound = getColumnUpperBound(localRow) + 1;
-        final int localCol = Prompter.promptRangeInteger(
-                colHumanLowerBound,
-                colHumanUpperBound,
-                String.format("Insert a column number for the seat (min %s, max: %s): ", colHumanLowerBound, colHumanUpperBound),
-                String.format("Please insert a valid number between %s and %s!", colHumanLowerBound, colHumanUpperBound)
-        ) - 1;
+        final int localCol = Prompter.promptRangeInteger(colHumanLowerBound, colHumanUpperBound, String.format("Insert a column number for the seat (min %s, max: %s): ", colHumanLowerBound, colHumanUpperBound), String.format("Please insert a valid number between %s and %s!", colHumanLowerBound, colHumanUpperBound)) - 1;
 
         return new Position(localCol, localRow);
     }
@@ -122,7 +114,6 @@ public class Position {
         return String.format("%s%s", getRowLetter(), col + 1);
     }
 
-
     @Override
     public String toString() {
         return String.format("Position { row: %s, col: %s }", row, col);
@@ -131,18 +122,12 @@ public class Position {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Position position = (Position) o;
-
-        if (col != position.col) return false;
-        return row == position.row;
+        if (!(o instanceof Position position)) return false;
+        return col == position.col && row == position.row;
     }
 
     @Override
     public int hashCode() {
-        int result = col;
-        result = 31 * result + row;
-        return result;
+        return Objects.hash(col, row);
     }
 }
